@@ -13,30 +13,8 @@ function getElement(selector, parent = document) {
 }
 
 // Classes
-
-class Score {
-    #date;
-    #hits;
-    #percentage;
-  
-    constructor(date, hits, percentage) {
-      this.#date = date;
-      this.#hits = hits;
-      this.#percentage = percentage;
-    }
-  
-    get date() {
-      return this.#date;
-    }
-  
-    get hits() {
-      return this.#hits;
-    }
-  
-    get percentage() {
-      return this.#percentage;
-    }
-}
+// outro_arquivo.js
+import Score from './Score.js';
 
 // DOM Elements
 const userInput = select('.user-input');
@@ -171,7 +149,7 @@ function startGame() {
         introGameAudio.currentTime = 0;
         const GameAudio = select('.game-audio');
         GameAudio.play();
-        let countdown = 10;
+        let countdown = 25;
         countdownInterval = setInterval(() => {
             if (countdown > 0) { 
                 countdown--;
