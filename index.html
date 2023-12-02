@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"> 
+    <head>
+        <!-- Meta Tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="author" content="Andre Cantuaria">
+        <meta name="description" content="Fakebook">
+        <meta name="keywords" content="web developer, web, developer, front-end,
+            html, css, javascript, react, sql">
+
+        <title>Space Typing Race</title>
+
+        <!-- Stylesheets -->
+        <link rel="stylesheet" href="./assets/style/index.css" media="all">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600&display=swap">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Nunito+Sans:ital,opsz,wght@0,6..12,200;0,6..12,400;0,6..12,500;1,6..12,500&family=Playball&family=Roboto+Mono:wght@300;400;500;600&display=swap">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+        <!-- Script -->
+        <script src="./assets/script/index.js" defer></script>
+    </head>
+    <body>
+        
+        <main>
+            <div class="center">
+                <div class="main-container">
+
+                    <div id="myModal" class="modal">
+                        <div class="modal-content">
+                            <span class="close" onclick="closeModal()">&times;</span>
+                            <div class="modal-header">
+                                <h2>Game Over</h2>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Adicione a tabela de histórico de pontuações aqui -->
+                                <table class="score-table">
+                                    <!-- Cabeçalho da tabela -->
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Hits</th>
+                                        <th>Percentage</th>
+                                    </tr>
+                                    <!-- Linhas da tabela para os registros anteriores -->
+                                </table>
+                                <!-- Elementos existentes no seu modal -->
+                                <p class="date"></p>
+                                <p class="hits"></p>
+                                <p class="percentage"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Game Intro-->
+                    <div class="container-intro-game">
+                        <video autoplay playsinline muted loop id="myVideo">
+                            <source src="./assets/img/cinema_-_101948 (720p).mp4" type="video/mp4">
+                        </video>
+                        <div class="content-video">
+                            <div class="background-content-home">
+
+                                <h1>Space Typing Race</h1>
+                            <h2>Get ready to challenge your typing skills aboard this amazing spaceship in an intergalactic race.</h2>
+                            <p>Instructions: you need to quickly type the word that appears in front of you. 
+                            The more words you get right, the better your position in this space race.</p>
+                            <p>Buckle up and click below to start.</p>
+                            <button class="start-btn">Start Game</button>
+                            
+                            </div>
+                        </div>
+                    </div>
+
+                     <!-- Initial Countdown -->
+                     <div class="container-initial-countdown">
+                        <audio class="intro-game-audio" autoplay loop>
+                            <source src="./assets/sounds/female-robotic-countdown.mp3" type="audio/mp3">
+                        </audio>
+                        <video autoplay playsinline muted loop id="myVideo">
+                            <source src="./assets/img/screen-effect.mp4" type="video/mp4">
+                        </video>
+                        <div class="content-video">
+                            <h1 class="initial-counter-h1">Ignition sequence start...</h1>
+                            <div><h1 class="initial-counter"></h1></div>
+                        </div>
+                    </div>
+
+                
+                    <!-- Start Game -->
+                    <div class="container-start-game">
+                        <audio class="game-audio" autoplay loop>
+                            <source src="./assets/sounds/spaceship-ambience.mp3" type="audio/mp3">
+                        </audio>
+                        <video autoplay playsinline muted loop id="myVideo">
+                            <source src="./assets/img/travel-space.mp4" type="video/mp4">
+                        </video>
+                        <div class="overlay"></div> <!-- Spaceship panel-->
+                        <div class="content-video">
+                            <div class="container-game-countdown"><h1 class="game-countdown">Time left:</h1></div>
+
+                            <div class="form-container">
+                                <div><p class="output"></p></div>
+                                <input type="text" class="user-input">
+                                <div class="info-output-container"><p class="info-output"></p></div>
+                                <button class="restart-btn">Restart Game</button>
+                                <button class="score-btn">Scores</button>
+                                
+                                
+                            </div>
+
+                        </div>
+                    </div>
+
+                     
+
+                </div>
+            </div>
+        </main>            
+    </body>
+</html>
