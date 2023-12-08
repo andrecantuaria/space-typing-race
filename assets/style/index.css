@@ -210,6 +210,7 @@ video {
 /*----SCORE BTN----*/
 
 .score-btn {
+    display: none;
     width: 200px;
     height: 60px;
     border-radius: 10px; 

@@ -85,7 +85,7 @@ function initialCountdown() {
     initialCountdownInterval = setInterval(() => {
         initialCounterH1.style.display = 'none';
         initialCounter.textContent = `${countdown}`;
-        
+
         if (countdown === 0) {
             clearInterval(initialCountdownInterval);
             containerIntroGame.style.display = 'none';
@@ -98,7 +98,7 @@ function initialCountdown() {
     }, 1000);
 }
 
-// Start Game 
+// Start Game
 
 function getRandomWord(array) {
     let randomIndex = Math.floor(Math.random() * array.length);
@@ -120,16 +120,8 @@ function compareWords(userInputValue, wordToGuess) {
     if (userInputValue.toLowerCase() === wordToGuess.toLowerCase()) {
         removeRandomWord(words);
         userInput.value = '';
-        infoOutput.textContent = 'Correct!';
-        setTimeout(() => {
-            infoOutput.textContent = '';
-        }, 2000); 
         return true;
     } else {
-        infoOutput.textContent = 'Typing error. Try again!';
-        setTimeout(() => {
-            infoOutput.textContent = '';
-        }, 2000);
         return false;
     }
 }
@@ -139,9 +131,9 @@ let countdownInterval = null;
 function startGame() {
     userInput.disabled = false;
     userInput.focus();
-    
+
     let wordToGuess = displayRandomWord();
-    let correctWordCount = 0; 
+    let correctWordCount = 0;
 
     if (containerStartGame.style.display === 'block') {
         const introGameAudio = select('.intro-game-audio');
@@ -151,7 +143,7 @@ function startGame() {
         GameAudio.play();
         let countdown = 25;
         countdownInterval = setInterval(() => {
-            if (countdown > 0) { 
+            if (countdown > 0) {
                 countdown--;
                 gameCountdown.textContent = `Time left: ${countdown} seconds`;
             }
@@ -159,30 +151,26 @@ function startGame() {
             if (countdown === 0) {
                 output.textContent = 'Game Over';
                 userInput.disabled = true;
-                infoOutput.textContent = `You typed ${correctWordCount} words correctly.`;
                 displayGameOver(correctWordCount);
                 clearInterval(countdownInterval);
             }
         }, 1000);
     }
 
-    onEvent('keyup', userInput, (event) => {
-        if (event.key === 'Enter') {
-            const userInputValue = userInput.value.trim();
-            const isCorrect = compareWords(userInputValue, wordToGuess);
+    onEvent('input', userInput, () => {
+        const userInputValue = userInput.value.trim();
+        const isCorrect = compareWords(userInputValue, wordToGuess);
 
-            if (isCorrect) {
-                correctWordCount++; 
+        if (isCorrect) {
+            correctWordCount++;
 
-                if (words.length > 0) {
-                    wordToGuess = displayRandomWord();
-                } else {
-                    output.textContent = 'WOW!!! You cleared the game! Your are an amazing typer';
-                    displayGameOver(correctWordCount);
-                    userInput.disabled = true;
-                    gameContainer.style.display = 'none';
-                    clearInterval(countdownInterval);
-                }
+            if (words.length > 0) {
+                wordToGuess = displayRandomWord();
+            } else {
+                output.textContent = 'WOW!!! You cleared the game! Your are an amazing typer';
+                displayGameOver(correctWordCount);
+                userInput.disabled = true;
+                clearInterval(countdownInterval);
             }
         }
     });
@@ -202,18 +190,19 @@ function restartGame() {
 
     introGameAudio.play();
 
-    words.length = 0;  
-    words.push(...originalWords); 
+    words.length = 0;
+    words.push(...originalWords);
     userInput.disabled = false;
     userInput.value = '';
     output.textContent = '';
     infoOutput.textContent = '';
     containerStartGame.style.display = 'none';
-    clearInterval(initialCountdownInterval); 
+    clearInterval(initialCountdownInterval);
     containerInitialCountdown.style.display = 'block';
 
     initialCountdown();
 }
+
 onEvent('click', restartBtn, restartGame);
 
 // Display info
