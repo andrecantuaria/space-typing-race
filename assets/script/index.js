@@ -12,6 +12,22 @@ function getElement(selector, parent = document) {
     return parent.getElementById(selector);
 }
 
+// DOM Elements
+const userInput = select('.user-input');
+const output = select('.output');
+const infoOutput = select('.info-output');
+const formContainer = select('.form-container');
+const containerIntroGame = select('.container-intro-game');
+const containerInitialCountdown = select('.container-initial-countdown');
+const containerStartGame = select('.container-start-game');
+const containerGameOver = select('.container-game-over');
+const startBtn = select('.start-btn');
+const initialCounter = select('.initial-counter');
+const initialCounterH1 = select('.initial-counter-h1');
+const gameCountdown = select('.game-countdown');
+const restartBtn = select('.restart-btn');
+const scoreBtn = select('.score-btn');
+
 // Words array
 const words = [
     'dinosaur', 'love', 'pineapple', 'calendar', 'robot', 'building',
@@ -59,7 +75,6 @@ function saveScoreHistoryToLocalStorage(scoreHistory) {
 
 scoreHistory = getScoreHistoryFromLocalStorage();
 
-
 // Intro Game
 function playGame() {
     const introGameAudio = select('.intro-game-audio');
@@ -74,12 +89,12 @@ function playGame() {
     // Restart the intro audio
     introGameAudio.play();
 
-    select('.container-intro-game').style.display = 'none';
-    select('.container-initial-countdown').style.display = 'block';
+    containerIntroGame.style.display = 'none';
+    containerInitialCountdown.style.display = 'block';
     initialCountdown();
 }
 
-onEvent('click', select('.start-btn'), playGame);
+onEvent('click', startBtn, playGame);
 
 // Initial Countdown
 let initialCountdownInterval = null;
@@ -87,14 +102,14 @@ let initialCountdownInterval = null;
 function initialCountdown() {
     let countdown = 5;
     initialCountdownInterval = setInterval(() => {
-        select('.initial-counter-h1').style.display = 'none';
-        select('.initial-counter').textContent = `${countdown}`;
+        initialCounterH1.style.display = 'none';
+        initialCounter.textContent = `${countdown}`;
 
         if (countdown === 0) {
             clearInterval(initialCountdownInterval);
-            select('.container-intro-game').style.display = 'none';
-            select('.container-initial-countdown').style.display = 'none';
-            select('.container-start-game').style.display = 'block';
+            containerIntroGame.style.display = 'none';
+            containerInitialCountdown.style.display = 'none';
+            containerStartGame.style.display = 'block';
             startGame();
         }
 
@@ -115,7 +130,7 @@ function removeRandomWord(array) {
 
 function displayRandomWord() {
     const wordToDisplay = getRandomWord(words);
-    select('.output').textContent = wordToDisplay;
+    output.textContent = wordToDisplay;
     return wordToDisplay;
 }
 
@@ -128,7 +143,7 @@ function compareWords(userInputValue, wordToGuess) {
             words.splice(indexToRemove, 1);
         }
 
-        select('.user-input').value = '';
+        userInput.value = '';
         return true;
     } else {
         return false;
@@ -138,38 +153,38 @@ function compareWords(userInputValue, wordToGuess) {
 let countdownInterval = null;
 
 function startGame() {
-    select('.user-input').style.display = 'block';
-    select('.user-input').focus();
-    select('.user-input').value = '';
+    userInput.style.display = 'block';
+    userInput.focus();
+    userInput.value = '';
 
     let wordToGuess = displayRandomWord();
     let correctWordCount = 0;
 
-    if (select('.container-start-game').style.display === 'block') {
+    if (containerStartGame.style.display === 'block') {
         const introGameAudio = select('.intro-game-audio');
         introGameAudio.pause();
         introGameAudio.currentTime = 0;
-        const gameAudio = select('.game-audio');
-        gameAudio.play();
-        let countdown = 21;
+        const GameAudio = select('.game-audio');
+        GameAudio.play();
+        let countdown = 25;
         countdownInterval = setInterval(() => {
             if (countdown > 0) {
                 countdown--;
-                select('.game-countdown').innerHTML = `<i class="fa-solid fa-stopwatch"></i> ${countdown}`;
+                gameCountdown.innerHTML = `<i class="fa-solid fa-stopwatch"></i> ${countdown}`;
             }
 
             if (countdown === 0) {
-                select('.output').textContent = 'Game Over';
-                select('.user-input').style.display = 'none';
-                select('.score-btn').style.display = 'inline';
+                output.textContent = 'Game Over';
+                userInput.style.display = 'none';
+                scoreBtn.style.display = 'inline';
                 displayGameOver(correctWordCount);
                 clearInterval(countdownInterval);
             }
         }, 1000);
     }
 
-    onEvent('input', select('.user-input'), () => {
-        const userInputValue = select('.user-input').value.trim();
+    onEvent('input', userInput, () => {
+        const userInputValue = userInput.value.trim();
         const isCorrect = compareWords(userInputValue, wordToGuess);
 
         if (isCorrect) {
@@ -178,9 +193,9 @@ function startGame() {
             if (words.length > 0) {
                 wordToGuess = displayRandomWord();
             } else {
-                select('.output').textContent = 'WOW!!! You cleared the game! You are an amazing typer';
+                output.textContent = 'WOW!!! You cleared the game! Your are an amazing typer';
                 displayGameOver(correctWordCount);
-                select('.user-input').disabled = true;
+                userInput.disabled = true;
                 clearInterval(countdownInterval);
             }
         }
@@ -203,20 +218,20 @@ function restartGame() {
 
     words.length = 0;
     words.push(...originalWords);
-    select('.user-input').disabled = false;
-    select('.user-input').value = '';
-    select('.output').textContent = '';
-    select('.info-output').textContent = '';
-    select('.container-start-game').style.display = 'none';
-    select('.score-btn').style.display = 'none';
+    userInput.disabled = false;
+    userInput.value = '';
+    output.textContent = '';
+    infoOutput.textContent = '';
+    containerStartGame.style.display = 'none';
+    scoreBtn.style.display = 'none';
     clearInterval(initialCountdownInterval);
     clearInterval(countdownInterval);
-    select('.container-initial-countdown').style.display = 'block';
+    containerInitialCountdown.style.display = 'block';
 
     initialCountdown();
 }
 
-onEvent('click', select('.restart-btn'), restartGame);
+onEvent('click', restartBtn, restartGame);
 
 // Display info
 function displayGameOver(correctWordCount) {
@@ -238,25 +253,22 @@ function displayGameOver(correctWordCount) {
 
     // Update modal content
     updateModal();
-
-    console.log(`You typed ${correctWordCount} words correctly.`);
-    console.log("Game Score:", gameScore);
 }
 
 function updateModal() {
     select('.date').innerHTML = '';
     select('.hits').innerHTML = '';
     select('.percentage').innerHTML = '';
-    
+
     // Sort the score history by hits (descending order).
     const sortedScoreHistory = scoreHistory.slice().sort((a, b) => b.hits - a.hits);
-    
+
     // Show only the top 10 scores
     const top10Scores = sortedScoreHistory.slice(0, 10);
-    
+
     // Add score history to the modal
     const scoreTable = select('.score-table');
-    scoreTable.innerHTML = '<tr><th>Date</th><th>Hits</th><th>Percentage</th></tr>';
+    scoreTable.innerHTML = '<tr><th>Date</th><th>Words</th><th>Percentage</th></tr>';
 
     top10Scores.forEach(score => {
         const row = document.createElement('tr');
@@ -272,7 +284,7 @@ const percentageElement = select('.percentage');
 
 // Modal
 onEvent('DOMContentLoaded', document, function () {
-    onEvent('click', select('.score-btn'), openModal);
+    onEvent('click', scoreBtn, openModal);
 });
 
 // Open the modal

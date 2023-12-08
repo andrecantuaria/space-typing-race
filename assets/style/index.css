@@ -265,7 +265,6 @@ video {
 .form-container {
     display: inline-block;
     width: 650px;
-    background-color: none;
     border-radius: 5px;
     padding: 15px;
 }
@@ -323,8 +322,6 @@ input[type="text"]::placeholder {
 .info-output-container {
     height: 30px;
     width: 100%;
-    background-color:none;
- 
 }
 
 /*--------------MODAL------------------*/
