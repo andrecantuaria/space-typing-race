@@ -129,7 +129,7 @@ function compareWords(userInputValue, wordToGuess) {
 let countdownInterval = null;
 
 function startGame() {
-    userInput.disabled = false;
+    userInput.style.display = 'block';
     userInput.focus();
 
     let wordToGuess = displayRandomWord();
@@ -145,12 +145,13 @@ function startGame() {
         countdownInterval = setInterval(() => {
             if (countdown > 0) {
                 countdown--;
-                gameCountdown.textContent = `Time left: ${countdown} seconds`;
+                gameCountdown.innerHTML = `<i class="fa-solid fa-stopwatch"></i> ${countdown}`;
             }
 
             if (countdown === 0) {
                 output.textContent = 'Game Over';
-                userInput.disabled = true;
+                userInput.style.display = 'none';
+                scoreBtn.style.display = 'inline';
                 displayGameOver(correctWordCount);
                 clearInterval(countdownInterval);
             }
@@ -197,7 +198,9 @@ function restartGame() {
     output.textContent = '';
     infoOutput.textContent = '';
     containerStartGame.style.display = 'none';
+    scoreBtn.style.display = 'none';
     clearInterval(initialCountdownInterval);
+    clearInterval(countdownInterval);
     containerInitialCountdown.style.display = 'block';
 
     initialCountdown();
@@ -209,7 +212,7 @@ onEvent('click', restartBtn, restartGame);
 function displayGameOver(correctWordCount) {
     const date = new Date();
     const hits = correctWordCount;
-    const totalWords = words.length;
+    const totalWords = originalWords.length;
     const percentage = (correctWordCount / totalWords) * 100;
 
     const gameScore = new Score(
@@ -231,11 +234,14 @@ function updateModal() {
     hitsElement.innerHTML = '';
     percentageElement.innerHTML = '';
     
+    // Ordena o histórico de pontuações pelo número de acertos em ordem decrescente
+    const sortedScoreHistory = scoreHistory.slice().sort((a, b) => b.hits - a.hits);
+    
     // Adiciona histórico do score
     const scoreTable = select('.score-table');
     scoreTable.innerHTML = '<tr><th>Date</th><th>Hits</th><th>Percentage</th></tr>';
 
-    scoreHistory.forEach(score => {
+    sortedScoreHistory.forEach(score => {
         const row = document.createElement('tr');
         row.innerHTML = `<td>${score.date}</td><td>${score.hits}</td><td>${score.percentage.toFixed(3)}%</td>`;
         scoreTable.appendChild(row);
