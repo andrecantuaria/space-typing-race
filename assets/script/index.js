@@ -117,15 +117,22 @@ function displayRandomWord() {
 }
 
 function compareWords(userInputValue, wordToGuess) {
-    if (userInputValue.toLowerCase() === wordToGuess.toLowerCase()) {
-        removeRandomWord(words);
+    const isCorrect = userInputValue.toLowerCase() === wordToGuess.toLowerCase();
+
+    if (isCorrect) {
+        const indexToRemove = words.findIndex(word => word.toLowerCase() === wordToGuess.toLowerCase());
+        if (indexToRemove !== -1) {
+            words.splice(indexToRemove, 1);
+            console.log('Removed word:', wordToGuess);
+            console.log('New array:', words);
+        }
+ 
         userInput.value = '';
         return true;
     } else {
         return false;
     }
 }
-
 let countdownInterval = null;
 
 function startGame() {
@@ -259,14 +266,8 @@ onEvent('DOMContentLoaded', document, function () {
 
 // Open the modal
 function openModal() {
-    // Verifica se o jogo já terminou antes de abrir o modal
-    if (scoreHistory.length > 0) {
-        const modal = getElement('myModal');
-        modal.style.display = 'flex';
-
-        // Display info
-        updateModal();
-    }
+    const modal = getElement('myModal');
+    modal.style.display = 'flex';
 }
 
 // Close the modal
